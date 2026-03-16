@@ -1,0 +1,38 @@
+name: Deploy to Development
+
+# Trigger on pushes to the 'develop' branch
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Download your repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up SSH with your private key
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.WPENGINE_SSH_PRIVATE_KEY }}
+
+      # Step 3: Trust WPEngine's Git server (avoid host key verification)
+      - name: Add WPEngine to known hosts
+        run: ssh-keyscan git.wpengine.com >> ~/.ssh/known_hosts
+
+      # Step 4: Push code to WPEngine development remote
+      - name: Push to WPEngine development remote
+        run: |
+          git remote add wpengine-dev ${{ secrets.WPENGINE_DEV_REMOTE }}
+          git push wpengine-dev develop:main --force
+
+      # Step 5: Clear WPEngine cache via SSH
+      - name: Clear WPEngine cache
+        run: |
+          # Extract install name from the remote URL (e.g., "your-site" from ".../development/your-site.git")
+          INSTALL_NAME=$(echo "${{ secrets.WPENGINE_DEV_REMOTE }}" | sed -E 's/.*\/(.+)\.git/\1/')
+          ssh git@git.wpengine.com "cd /sites/$INSTALL_NAME && wp wpe cache flush"
