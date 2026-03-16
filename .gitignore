@@ -1,0 +1,122 @@
+#---------------------------
+# WORDPRESS CONTENT – IGNORE ALL THEMES & PLUGINS BY DEFAULT
+#---------------------------
+# Repo root contains wp-content/; themes and plugins live inside
+wp-content/themes/*
+wp-content/plugins/*
+
+#---------------------------
+# WP-CONTENT MANAGED DIRECTORIES – NEVER TRACK
+#---------------------------
+# Dynamic content, cache, uploads, and platform-managed folders
+wp-content/mu-plugins/
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/cache/
+wp-content/_wpeprivate/
+wp-content/litespeed/
+wp-content/updraft/
+wp-content/blogs.dir/
+wp-content/languages/
+
+#---------------------------
+# WP-CONTENT CACHE & RUNTIME FILES
+#---------------------------
+wp-content/advanced-cache.php
+wp-content/object-cache.php
+wp-content/wp-cache-config.php
+wp-content/debug.log
+wp-content/mysql.sql
+wp-content/CasperSec.php
+
+#---------------------------
+# WORDPRESS CORE FILES (if full WP install in repo)
+#---------------------------
+/index.php
+/wp-activate.php
+/wp-blog-header.php
+/wp-comments-post.php
+/wp-config-sample.php
+/wp-config.php
+/wp-cron.php
+/wp-links-opml.php
+/wp-load.php
+/wp-login.php
+/wp-mail.php
+/wp-settings.php
+/wp-signup.php
+/wp-trackback.php
+/xmlrpc.php
+/license.txt
+/readme.html
+/wp-admin/
+/wp-includes/
+
+#---------------------------
+# ENVIRONMENT & CONFIGURATION FILES
+#---------------------------
+.env
+.env.local
+.env.*.local
+wp-config-local.php
+wp-config-development.php
+wp-config-staging.php
+wp-config-production.php
+
+#---------------------------
+# BUILD ARTIFACTS & DEPENDENCIES
+#---------------------------
+node_modules/
+vendor/
+*.map
+*.ts.map
+*.js.map
+composer.lock
+
+#---------------------------
+# OS GENERATED FILES
+#---------------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+#---------------------------
+# IDE / EDITOR FILES
+#---------------------------
+.vscode/
+.idea/
+*.sublime-*
+
+#---------------------------
+# LOGS & TEMPORARY FILES
+#---------------------------
+*.log
+*.tmp
+*.bak
+*.cache
+error_log
+php_errorlog
+
+#---------------------------
+# SECURITY & BACKUPS
+#---------------------------
+*.backup
+*.sql
+*.tar
+*.gz
+*.zip
+**/backup/
+**/backups/
+
+#---------------------------
+# CUSTOM CODE – TRACK THESE
+#---------------------------
+# GeneratePress child theme
+!wp-content/themes/generatepress-child/
+!wp-content/themes/generatepress-child/**
+
+# Uncomment and add your custom plugin when needed:
+# !wp-content/plugins/your-custom-plugin/
+# !wp-content/plugins/your-custom-plugin/**
