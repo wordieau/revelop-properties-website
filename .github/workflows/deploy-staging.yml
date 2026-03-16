@@ -25,7 +25,8 @@ jobs:
           git remote add wpengine-staging ${{ secrets.WPENGINE_STAGING_REMOTE }}
           git push wpengine-staging staging:main --force
 
-      - name: Clear WPEngine cache
+      - name: Clear WPEngine cache (if enabled)
+        if: vars.ENABLE_CACHE_FLUSH == 'true'
         run: |
           INSTALL_NAME=$(echo "${{ secrets.WPENGINE_STAGING_REMOTE }}" | sed -E 's/.*\/(.+)\.git/\1/')
           ssh git@git.wpengine.com "cd /sites/$INSTALL_NAME && wp wpe cache flush"

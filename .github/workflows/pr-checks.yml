@@ -8,6 +8,7 @@ jobs:
   # Job 1: PHP syntax check
   php-lint:
     name: PHP Lint
+    if: vars.ENABLE_PHP_LINT == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

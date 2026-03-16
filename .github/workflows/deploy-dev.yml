@@ -31,7 +31,8 @@ jobs:
           git push wpengine-dev develop:main --force
 
       # Step 5: Clear WPEngine cache via SSH
-      - name: Clear WPEngine cache
+      - name: Clear WPEngine cache (if enabled)
+        if: vars.ENABLE_CACHE_FLUSH == 'true'
         run: |
           # Extract install name from the remote URL (e.g., "your-site" from ".../development/your-site.git")
           INSTALL_NAME=$(echo "${{ secrets.WPENGINE_DEV_REMOTE }}" | sed -E 's/.*\/(.+)\.git/\1/')
