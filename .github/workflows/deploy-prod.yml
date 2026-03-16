@@ -1,0 +1,31 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.WPENGINE_SSH_PRIVATE_KEY }}
+
+      - name: Add WPEngine to known hosts
+        run: ssh-keyscan git.wpengine.com >> ~/.ssh/known_hosts
+
+      - name: Push to WPEngine production remote
+        run: |
+          git remote add wpengine-prod ${{ secrets.WPENGINE_PROD_REMOTE }}
+          git push wpengine-prod main:main --force
+
+      - name: Clear WPEngine cache
+        run: |
+          INSTALL_NAME=$(echo "${{ secrets.WPENGINE_PROD_REMOTE }}" | sed -E 's/.*\/(.+)\.git/\1/')
+          ssh git@git.wpengine.com "cd /sites/$INSTALL_NAME && wp wpe cache flush"
