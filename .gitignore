@@ -72,6 +72,7 @@ vendor/
 *.ts.map
 *.js.map
 composer.lock
+package-lock.json
 
 #---------------------------
 # OS GENERATED FILES
